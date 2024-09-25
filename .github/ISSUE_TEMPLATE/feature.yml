@@ -1,0 +1,39 @@
+name: Feature 🚀
+description: 새로운 기능을 빠르게 공유하세요.
+title: "[feat] "
+labels: ["feature"]
+projects: ["octo-org/1", "octo-org/44"]
+assignees:
+  - octocat
+body:
+  - type: textarea
+    id: work-process
+    attributes:
+      label: 🕹️ 구현할 기능
+      description: 어떤 기능을 구현할지 알려주세요.
+      placeholder: ex) 카카 로그인시 AccessToken을 발급하는 로직을 구현합니다.
+    validations:
+      required: true오
+  - type: textarea
+    id: detail-work
+    attributes:
+      label: 🛠️ 상세작업내용
+      value: |
+        - [ ] 1.
+        - [ ] 2.
+        - [ ] 3.
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: ⏰ 예상소요시간
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: 📄 참고자료
+      placeholder: ex) URL
+    validations:
+      required: false

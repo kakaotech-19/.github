@@ -1,0 +1,36 @@
+name: Bug Report With Template 🚀
+description: 어느정도 완성되어있는 양식으로 빠르게 작성하세요.
+title: "[Bug] "
+labels: ["bug", "triage"]
+projects: ["octo-org/1", "octo-org/44"]
+assignees:
+  - octocat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 📍 문제 상황
+      description: 문제상황을 알려주세요.
+      placeholder: 도커를 실행할 수 없습니다. zsh command 'docker; not found!
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: 🎯 해결 방법
+      description: 구체적인 옵션을 주시면 좋습니다.
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: ⭐️ 중요도
+      multiple: true
+      options:
+        - 상 - 당장 해결해야 다음 작업이 진행가능합니다.
+        - 중 - 빠르게 해결해야합니다.
+        - 하 - 당장 해결하지 않아도 되지만 잠재적 영향이 있을 수 있습니다.
+    validations:
+      required: true
