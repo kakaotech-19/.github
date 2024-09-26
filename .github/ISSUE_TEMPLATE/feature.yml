@@ -11,9 +11,9 @@ body:
     attributes:
       label: 🕹️ 구현할 기능
       description: 어떤 기능을 구현할지 알려주세요.
-      placeholder: ex) 카카 로그인시 AccessToken을 발급하는 로직을 구현합니다.
+      placeholder: ex) 반복적인 명령어를 자동화하는 스크립트를 작성합니다.
     validations:
-      required: true오
+      required: true
   - type: textarea
     id: detail-work
     attributes:
