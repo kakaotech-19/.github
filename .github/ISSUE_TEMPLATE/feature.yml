@@ -17,7 +17,7 @@ body:
   - type: input
     id: branchName
     attributes:
-      label: '브랜치 이름 ( Fixed Prefix : feature/[Ticket Number] )/'
+      label: '브랜치 이름 ( Fixed Prefix : feature/[Ticket Number] )'
       description: '원하는 브랜치 이름을 입력해주세요.'
       placeholder: 'branch-name'
     validations:
