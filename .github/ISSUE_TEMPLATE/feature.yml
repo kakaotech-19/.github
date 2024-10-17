@@ -14,6 +14,14 @@ body:
       placeholder: 'TODAK-00'
     validations:
       required: true
+  - type: input
+    id: branchName
+    attributes:
+      label: '브랜치 이름'
+      description: '원하는 브랜치 이름을 입력해주세요.'
+      placeholder: 'branch-name'
+    validations:
+      required: true
   - type: textarea
     id: work-process
     attributes:
