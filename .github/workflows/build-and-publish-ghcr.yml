@@ -4,23 +4,6 @@ name: Build and Publish to GHCR
 
 on:
   workflow_call:
-    inputs:
-      registry_username:
-        description: "GHCR Username"
-        required: true
-        type: string
-      registry_password:
-        description: "GHCR Password or PAT Token"
-        required: true
-        type: string
-      discord_webhook:
-        description: "Discord Webhook URL"
-        required: true
-        type: string
-      repository_name:
-        description: "GitHub Repository Name"
-        required: true
-        type: string
     secrets:
       ORGANIZATION:
         description: "Organization name for GHCR"
@@ -47,8 +30,8 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ inputs.registry_username }}
-          password: ${{ inputs.registry_password }} # only classic token
+          username: ${{ secrets.ORGANIZATION }}
+          password: ${{ secrets.PAT_TOKEN }} # only classic token
 
       - name: Build and Push Docker image
         uses: docker/build-push-action@v6
@@ -56,15 +39,15 @@ jobs:
           context: .
           file: Dockerfile
           push: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
-          tags: ghcr.io/${{ secrets.ORGANIZATION }}/${{ inputs.repository_name }}:latest
+          tags: ghcr.io/${{ secrets.ORGANIZATION }}/${{ github.repository }}:latest
 
       - name: Discord Notification
         uses: sarisia/actions-status-discord@v1
         if: always()
         with:
-          webhook: ${{ inputs.discord_webhook }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: "Build Result for ${{ inputs.repository_name }}"
+          title: "Build Result for ${{ github.repository }}"
           description: |
             ${{ job.status != 'success' && format('Failure at stage: {0}', job.status) || 'Build succeeded!' }}
           color: ${{ job.status == 'success' && '0x00ff00' || '0xff0000' }}
