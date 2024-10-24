@@ -1,11 +1,19 @@
 name: Sync Jira with GitHub Issue
 on:
-  issues:
-    types:
-      - opened # github 이슈 생성 시, jira 하위 작업 타입의 이슈 생성
-      - edited # github 이슈 업데이트 시, 관련 jira 이슈 업데이트
-      - closed # github 이슈 닫을 시, 관련 jira 이슈도 close
-
+  # issues:
+  #   types:
+  #     - opened # github 이슈 생성 시, jira 하위 작업 타입의 이슈 생성
+  #     - edited # github 이슈 업데이트 시, 관련 jira 이슈 업데이트
+  #     - closed # github 이슈 닫을 시, 관련 jira 이슈도 close
+  workflow_call:
+    secrets:
+      JIRA_BASE_URL:
+        required: true
+      JIRA_API_TOKEN:
+        required: true
+      JIRA_USER_EMAIL:
+        required: true
+        
 jobs:
   sync-jira-issue:
     name: Sync Jira with GitHub Issue
