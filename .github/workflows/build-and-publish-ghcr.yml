@@ -1,5 +1,3 @@
-# org-workflows/.github/workflows/build-and-publish-ghcr.yml
-
 name: Build and Publish to GHCR
 
 on:
@@ -33,13 +31,29 @@ jobs:
           username: ${{ secrets.ORGANIZATION }}
           password: ${{ secrets.PAT_TOKEN }} # only classic token
 
+      - name: Determine Tag
+        id: tag
+        run: |
+          if [[ "${GITHUB_REPOSITORY}" == "kakaotech-19/frontend" ]]; then
+            if [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
+              echo "suffix=-dev" >> $GITHUB_ENV
+            elif [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+              echo "suffix=-prod" >> $GITHUB_ENV
+            else
+              echo "Skipping build for branch: ${GITHUB_REF}"
+              exit 1
+            fi
+          else
+            echo "suffix=" >> $GITHUB_ENV
+          fi
+
       - name: Build and Push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
           push: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
-          tags: ghcr.io/${{ secrets.ORGANIZATION }}/${{ github.repository }}:latest
+          tags: ghcr.io/${{ secrets.ORGANIZATION }}/${{ github.repository }}${{ env.suffix }}:latest
 
       - name: Discord Notification
         uses: sarisia/actions-status-discord@v1
