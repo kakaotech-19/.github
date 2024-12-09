@@ -54,6 +54,8 @@ jobs:
           file: Dockerfile
           push: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main') }}
           tags: ghcr.io/${{ secrets.ORGANIZATION }}/${{ github.repository }}${{ env.suffix }}:latest
+          build-args: |
+            ENV: ${{ github.ref == 'refs/heads/main' ? 'prod' : 'dev' }}
 
       - name: Discord Notification
         uses: sarisia/actions-status-discord@v1
