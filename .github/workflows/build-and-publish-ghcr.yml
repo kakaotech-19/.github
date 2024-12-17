@@ -35,9 +35,9 @@ jobs:
         id: tag
         run: |
           if [[ "${GITHUB_REPOSITORY}" == "kakaotech-19/frontend" ]]; then
-            if [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
+            if [[ "${GITHUB_REF}" == "refs/heads/develop" ]] || [[ "${GITHUB_BASE_REF}" == "develop" ]] ; then
               echo "suffix=-dev" >> $GITHUB_ENV
-            elif [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            elif [[ "${GITHUB_REF}" == "refs/heads/main" ]] || [[ "${GITHUB_BASE_REF}" == "main" ]]; then
               echo "suffix=-prod" >> $GITHUB_ENV
             else
               echo "Skipping build for branch: ${GITHUB_REF}"
