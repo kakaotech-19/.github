@@ -2,6 +2,9 @@ name: Dispatch-CD
 
 on:
   workflow_call:
+    secrets:
+      ORG_PAT:
+        description: "Personal Access Token for triggering workflows"
 
 jobs:
   trigger-cloud-repo:
