@@ -1,0 +1,24 @@
+name: Dispatch-CD
+
+on:
+  workflow_call:
+
+jobs:
+  trigger-cloud-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract repository name
+        id: extract-repo
+        run: |
+          # Extract the repository name (after the '/')
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          echo "repository_name=$REPO_NAME" >> $GITHUB_ENV
+
+      - name: Trigger workflow in Cloud Repository
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.ORG_PAT }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/kakaotech-19/cloud/actions/workflows/cd.yaml/dispatches \
+            -d '{"ref":"develop", "inputs":{"source_repo":"${{ env.repository_name }}"}}'
